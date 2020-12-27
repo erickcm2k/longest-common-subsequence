@@ -28,7 +28,7 @@ const MainNavigation = () => {
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
-        height="5rem"
+        height="4rem"
       >
         <ListItem
           color="white"

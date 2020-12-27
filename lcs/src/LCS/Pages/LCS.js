@@ -6,10 +6,12 @@ import InputReaders from '../Components/InputReaders';
 
 const LCS = () => {
   return (
-    <Container border="1px solid red" maxW={['90%', '80%', '80%', '60%']}>
-      <Text color="brand.stratos" fontSize={['xl', 'xl', 'xl', '2xl']}>
-        Usando Programación Dinámica
-      </Text>
+    <Container
+      mt="3"
+      border="1px solid red"
+      width="90%"
+      maxW={"90rem"}
+    >
       <Link to={`/`}>
         <Button
           leftIcon={<ArrowBackIcon />}
@@ -19,6 +21,17 @@ const LCS = () => {
           Volver
         </Button>
       </Link>
+      <Text
+        color="brand.stratos"
+        fontSize={['xl', 'xl', '3xl', '4xl']}
+        fontWeight="bold"
+        textAlign="center"
+      >
+        Usando Programación Dinámica
+      </Text>
+      <Button bg="brand.stratos" color="white">
+        Cambiar a recursividad
+      </Button>
       <InputReaders />
     </Container>
   );

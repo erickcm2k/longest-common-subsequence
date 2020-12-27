@@ -1,113 +1,138 @@
-import React, { useState } from 'react';
-import { Container, Button } from '@chakra-ui/react';
-import { useTable } from 'react-table';
+import React, { useState, useEffect } from 'react';
+import {
+  Container,
+  Button,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Stack,
+  Grid,
+  GridItem,
+  Box,
+  useToast,
+} from '@chakra-ui/react';
+import { ArrowUpIcon } from '@chakra-ui/icons';
 import './table.css';
 
-
 const DPTable = () => {
-  const COLUMNS = [
-    {
-      Header: 'A',
-      accessor: 'id',
-    },
-    {
-      Header: 'B',
-      accessor: 'first_name',
-    },
-    {
-      Header: 'C',
-      accessor: 'last_name',
-    },
-    {
-      Header: 'D',
-      accessor: 'date_of_birth',
-    },
-  ];
-  const DUMMY_DATA = [
-    {
-      id: 'X',
-      first_name: 'Dorey',
-      last_name: 'Rumbellow',
-      date_of_birth: '2020-09-08T18:11:46Z',
-    },
-    {
-      id: 'C',
-      first_name: 'Isaac',
-      last_name: 'Crow',
-      date_of_birth: '2020-09-26T18:23:21Z',
-    },
-    {
-      id: 'D',
-      first_name: 'Korella',
-      last_name: "O'Hannen",
-      date_of_birth: '2020-05-26T13:49:10Z',
-    },
-    {
-      id: 'X',
-      first_name: 'Ellette',
-      last_name: 'Skotcher',
-      date_of_birth: '2020-03-23T19:48:21Z',
-    },
-  ];
-  // const columns = React.useMemo(() => COLUMNS, []);
-  // const data = React.useMemo(() => DUMMY_DATA, []);
+  const toast = useToast();
+  const [value, setValue] = useState('AGGTAB');
+  const [secondValue, setSecondValue] = useState('GXTXAYB');
 
-  const [tableInstance, setTableInstance] = useState();
-  const GenerateTable = () => {
-    const table = useTable({
-      columns: COLUMNS,
-      data: DUMMY_DATA,
-    });
-    const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      rows,
-      prepareRow,
-    } = table;
+  const handleChange = event => setValue(event.target.value.toUpperCase());
 
-    setTableInstance({
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      rows,
-      prepareRow,
-    });
+  const handleSecondChange = event =>
+    setSecondValue(event.target.value.toUpperCase());
+
+  const [table, setTable] = useState([]);
+
+  const createEmptyTable = () => {
+    // Generate empty table
+    if (value.length === 0 || secondValue.length === 0) {
+      toast({
+        title: 'Hubo un error',
+        description: 'Ambas cadenas deben tener al menos un caracter.',
+        status: 'error',
+        duration: 4000,
+        isClosable: false,
+      });
+      return;
+    }
+    console.log(value);
+    console.log(secondValue);
+
+    let empyTable = [];
+
+    // Create columns
+    for (let i = 0; i < secondValue.length + 1; i++) {
+      empyTable.push([]);
+      // Fill first row
+      for (let i = 1; i < value.length + 1; i++) {
+        empyTable[0][i] = value[i - 1];
+      }
+    }
+    empyTable[0][0] = '*';
+
+    // // Fill first column
+    for (let i = 1; i < secondValue.length + 1; i++) {
+      empyTable[i][0] = secondValue[i - 1];
+    }
+
+    // Fill with zeros
+    for (let i = 1; i < value.length + 1; i++) {
+      for (let j = 1; j < secondValue.length + 1; j++) {
+        empyTable[j][i] = '0';
+      }
+    }
+    // console.log(empyTable);
+    setTable(empyTable);
   };
 
+  const computeLCS = () => {
+    createEmptyTable();
+  };
+
+  console.log(table);
+
   return (
-    <Container maxW="95%">
-      {tableInstance && (
-        <table {...tableInstance.getTableProps()}>
-          <thead>
-            {tableInstance.headerGroups.map(headerGroup => (
-              <tr {...tableInstance.headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th {...tableInstance.column.getHeaderProps()}>
-                    {column.render('Header')}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...tableInstance.getTableBodyProps()}>
-            {tableInstance.rows.map(row => {
-              tableInstance.prepareRow(row);
-              return (
-                <tr {...tableInstance.row.getRowProps()}>
-                  {row.cells.map(cell => (
-                    <td {...tableInstance.cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
-      <Button onClick={GenerateTable}>Calcular</Button>
-    </Container>
+    <>
+      <Container>
+        <Stack spacing={4}>
+          <InputGroup minW="17rem" alignSelf="center">
+            <InputLeftAddon
+              children="Cadena 1"
+              color="brand.stratos"
+              fontWeight="bold"
+            />
+            <Input
+              maxLength="10"
+              color="brand.stratos"
+              value={value}
+              onChange={handleChange}
+            />
+          </InputGroup>
+          <InputGroup minW="17rem" alignSelf="center">
+            <InputLeftAddon
+              children="Cadena 2"
+              color="brand.stratos"
+              fontWeight="bold"
+            />
+            <Input
+              maxLength="10"
+              color="brand.stratos"
+              value={secondValue}
+              onChange={handleSecondChange}
+            />
+          </InputGroup>
+          <Button colorScheme="green" fontWeight="bold" onClick={computeLCS}>
+            Calcular
+          </Button>
+        </Stack>
+      </Container>
+      {table.length > 0 ? (
+        <Grid
+          bg="brand.botticelli"
+          mt="5"
+          templateColumns={`repeat(${table[0].length}, 1fr)`}
+          templateRows={`repeat(${table.length - 1}, 1fr)`}
+          gap={1}
+        >
+          {table.map(row =>
+            row.map(cell => (
+              <Box
+                w="100%"
+                h="10"
+                color="brand.botticelli"
+                bg="brand.stratos"
+                key={Math.random()}
+              >
+                <ArrowUpIcon /> {cell}
+              </Box>
+            ))
+          )}
+        </Grid>
+      ) : null}
+    </>
   );
 };
 

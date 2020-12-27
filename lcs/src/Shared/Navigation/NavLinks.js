@@ -8,7 +8,7 @@ const NavLinks = props => {
         pr="5"
         py={props.patop}
         listStyleType="none"
-        fontSize={['lg', 'xl', 'xl', '2xl']}
+        fontSize={['md', 'md', 'md', 'lg']}
       >
         Acerca de
       </ListItem>
@@ -17,7 +17,7 @@ const NavLinks = props => {
         bg="brand.morningGlory"
         color="brand.stratos"
         pr="5"
-        fontSize={['lg', 'xl', 'xl', '2xl']}
+        fontSize={['md', 'md', 'md', 'lg']}
       >
         Ayuda
       </Button>
