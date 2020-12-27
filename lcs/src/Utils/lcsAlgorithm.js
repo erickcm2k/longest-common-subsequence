@@ -1,5 +1,5 @@
 /* Returns length of LCS for X[0..m-1], Y[0..n-1] */
-export default function lcs(X, Y, m, n) {
+function lcs(X, Y, m, n) {
   let L = [];
   for (let i = 0; i < m + 1; i++) {
     L.push([]);
@@ -8,6 +8,7 @@ export default function lcs(X, Y, m, n) {
   /* Following steps build L[m+1][n+1] in bottom up fashion. Note
       that L[i][j] contains length of LCS of X[0..i-1] and Y[0..j-1] */
   for (let i = 0; i <= m; i++) {
+    console.log(i, L);
     for (let j = 0; j <= n; j++) {
       if (i === 0 || j === 0) {
         L[i][j] = 0;
@@ -47,7 +48,7 @@ export default function lcs(X, Y, m, n) {
   let LCS = '';
   lcsStr.forEach(c => (LCS += c));
 
-  console.log(L);
+  // console.log(L);
 
   if (lcsStr.length < 1) {
     return false;
@@ -57,12 +58,12 @@ export default function lcs(X, Y, m, n) {
 }
 
 /* Driver program to test above function */
-// const main = () => {
-//   const X = 'AGGTAB';
-//   const Y = 'GXTXAYB';
-//   const m = X.length;
-//   const n = Y.length;
-//   lcs(X, Y, m, n);
-// };
+const main = () => {
+  const X = 'AGGTAB';
+  const Y = 'GXTXAYB';
+  const m = X.length;
+  const n = Y.length;
+  console.log(lcs(X, Y, m, n));
+};
 
-// main();
+main();

@@ -6,12 +6,7 @@ import InputReaders from '../Components/InputReaders';
 
 const LCS = () => {
   return (
-    <Container
-      mt="3"
-      border="1px solid red"
-      width="90%"
-      maxW={"90rem"}
-    >
+    <Container mt="3" width="90%" maxW={'90rem'}>
       <Link to={`/`}>
         <Button
           leftIcon={<ArrowBackIcon />}
