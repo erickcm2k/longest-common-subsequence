@@ -19,6 +19,7 @@ const Table = props => {
                 h="10"
                 color="brand.botticelli"
                 bg="brand.stratos"
+                textAlign="center"
                 key={Math.random()}
               >
                 {cell}

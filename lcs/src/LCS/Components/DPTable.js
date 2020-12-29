@@ -7,6 +7,7 @@ import {
   InputLeftAddon,
   Stack,
   useToast,
+  flexbox,
 } from '@chakra-ui/react';
 import Table from './Table';
 import './table.css';
@@ -15,19 +16,21 @@ const DPTable = () => {
   const toast = useToast();
   const [value, setValue] = useState('AGGTAB');
   const [secondValue, setSecondValue] = useState('GXTXAYB');
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleChange = event => setValue(event.target.value.toUpperCase());
 
   const handleSecondChange = event =>
     setSecondValue(event.target.value.toUpperCase());
-
+  const refreshPage = () => {
+    window.location.reload();
+  };
   const [table, setTable] = useState([]);
 
-  // const sleep = time => {
-  //   return new Promise(resolve => setTimeout(resolve, time));
-  // };
+  const sleep = time => {
+    return new Promise(resolve => setTimeout(resolve, time));
+  };
 
-  const createEmptyTable = async () => {
+  const computeLCS = async () => {
     if (value.length === 0 || secondValue.length === 0) {
       toast({
         title: 'Hubo un error',
@@ -47,27 +50,31 @@ const DPTable = () => {
     let empyTable = [];
 
     // Create columns
-    for (let i = 0; i < X.length + 1; i++) {
+    for (let i = 0; i < X.length + 2; i++) {
       empyTable.push([]);
-      // Fill first row
     }
-    for (let i = 1; i < Y.length + 1; i++) {
-      empyTable[0][i] = Y[i - 1];
-    }
+    // Fill first row
     empyTable[0][0] = '*';
+    empyTable[0][1] = '*';
+    empyTable[1][0] = '*';
+
+    for (let i = 2; i < Y.length + 2; i++) {
+      empyTable[0][i] = Y[i - 2];
+    }
 
     // // Fill first column
-    for (let i = 1; i < X.length + 1; i++) {
-      empyTable[i][0] = X[i - 1];
+    for (let i = 2; i < X.length + 2; i++) {
+      empyTable[i][0] = X[i - 2];
     }
 
-    // Fill with zeros
-    for (let i = 1; i < Y.length + 1; i++) {
-      for (let j = 1; j < X.length + 1; j++) {
-        empyTable[j][i] = 'xxxx';
+    // Fill with empty spaces.
+    for (let i = 1; i < Y.length + 2; i++) {
+      for (let j = 1; j < X.length + 2; j++) {
+        empyTable[j][i] = ' ';
       }
     }
-
+    setTable([...empyTable]);
+    await sleep(1000);
     // Que el algoritmo se esté ejecutando sobre una copia del arreglo, al momento
     // de insertar elementos se inserten sobre la copia que se va a modificar
     const L = [];
@@ -76,27 +83,28 @@ const DPTable = () => {
     }
     for (let i = 0; i <= m; i++) {
       for (let j = 0; j <= n; j++) {
+        await sleep(100);
+        setTable([...empyTable]);
         if (i === 0 || j === 0) {
           L[i][j] = 0;
-          if (i !== 0 && j !== 0) {
-            empyTable[i][j] = 0;
-          }
+          empyTable[i + 1][j + 1] = 0;
         } else if (X[i - 1] === Y[j - 1]) {
           L[i][j] = L[i - 1][j - 1] + 1;
-          if (i !== 0 && j !== 0) {
-            empyTable[i][j] = L[i - 1][j - 1] + 1;
-          }
+          empyTable[i + 1][j + 1] = L[i - 1][j - 1] + 1;
         } else {
           L[i][j] = Math.max(L[i - 1][j], L[i][j - 1]);
-          if (i !== 0 && j !== 0) {
-            empyTable[i][j] = Math.max(L[i - 1][j], L[i][j - 1]);
-          }
+          empyTable[i + 1][j + 1] = Math.max(L[i - 1][j], L[i][j - 1]);
         }
       }
     }
 
-    console.log(L);
     setTable(empyTable);
+  };
+
+  const handleAnimation = async () => {
+    setIsLoading(true);
+    await computeLCS();
+    setIsLoading(false);
   };
 
   return (
@@ -114,6 +122,7 @@ const DPTable = () => {
               color="brand.stratos"
               value={value}
               onChange={handleChange}
+              disabled={isLoading}
             />
           </InputGroup>
           <InputGroup minW="17rem" alignSelf="center">
@@ -127,15 +136,22 @@ const DPTable = () => {
               color="brand.stratos"
               value={secondValue}
               onChange={handleSecondChange}
+              disabled={isLoading}
             />
           </InputGroup>
           <Button
             colorScheme="green"
             fontWeight="bold"
-            onClick={createEmptyTable}
+            onClick={handleAnimation}
+            disabled={isLoading}
           >
             Calcular
           </Button>
+          {isLoading && (
+            <Button colorScheme="red" fontWeight="bold" onClick={refreshPage}>
+              Interrumpir
+            </Button>
+          )}
         </Stack>
       </Container>
       <Table table={table}></Table>
@@ -145,7 +161,7 @@ const DPTable = () => {
 
 export default DPTable;
 
-// const createEmptyTable = () => {
+// const computeLCS = () => {
 //   // Generate empty table
 //   if (value.length === 0 || secondValue.length === 0) {
 //     toast({
@@ -188,5 +204,5 @@ export default DPTable;
 // };
 
 // const computeLCS = () => {
-//   createEmptyTable();
+//   computeLCS();
 // };
