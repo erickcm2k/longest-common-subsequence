@@ -1,9 +1,54 @@
 import React from 'react';
 import { Grid, Box } from '@chakra-ui/react';
+import {
+  ArrowUpIcon as ArrowUp,
+  ArrowBackIcon as ArrowLeft,
+  StarIcon as ArrowCorner,
+} from '@chakra-ui/icons';
+
+// Determines cell icon.
+const getArrowIcon = direction => {
+  let arrowIcon;
+  switch (direction) {
+    case 'up':
+      arrowIcon = <ArrowUp />;
+      break;
+    case 'left':
+      arrowIcon = <ArrowLeft />;
+      break;
+    case 'corner':
+      arrowIcon = <ArrowCorner />;
+      break;
+    default:
+      arrowIcon = null;
+      break;
+  }
+
+  return arrowIcon;
+};
+
+// Determines cell background color.
+const getBgColor = cell => {
+  let bgColor = 'brand.stratos';
+
+  // Sets the zero border to a different color.
+  if (!cell.arrowDir && cell.value === 0) {
+    bgColor = 'brand.regalBlue';
+  }
+
+  if (cell.isCurrent) {
+    bgColor = 'tomato';
+  }
+
+  return bgColor;
+};
+
+// Renders dp table
 const Table = props => {
   return (
     <>
-      {props.table.length > 0 ? (
+      {/* Ensures that a table exists */}
+      {props.table ? (
         <Grid
           bg="brand.botticelli"
           mt="5"
@@ -17,12 +62,12 @@ const Table = props => {
               <Box
                 w="100%"
                 h="10"
-                color="brand.botticelli"
-                bg="brand.stratos"
+                color="white"
+                bg={getBgColor(cell)}
                 textAlign="center"
                 key={Math.random()}
               >
-                {cell}
+                {getArrowIcon(cell.arrowDir)} {cell.value}
               </Box>
             ))
           )}

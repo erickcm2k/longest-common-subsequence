@@ -9,7 +9,6 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import Table from './Table';
-import './table.css';
 
 const DPTable = () => {
   const toast = useToast();
@@ -23,7 +22,7 @@ const DPTable = () => {
   const refreshPage = () => {
     window.location.reload();
   };
-  const [table, setTable] = useState([]);
+  const [table, setTable] = useState();
 
   const sleep = time => {
     return new Promise(resolve => setTimeout(resolve, time));
@@ -53,27 +52,35 @@ const DPTable = () => {
       empyTable.push([]);
     }
     // Fill first row
-    empyTable[0][0] = '*';
-    empyTable[0][1] = '*';
-    empyTable[1][0] = '*';
+    empyTable[0][0] = { value: '*', isCurrent: false, arrowDir: '' };
+    empyTable[0][1] = { value: '*', isCurrent: false, arrowDir: '' };
+    empyTable[1][0] = { value: '*', isCurrent: false, arrowDir: '' };
 
     for (let i = 2; i < Y.length + 2; i++) {
-      empyTable[0][i] = Y[i - 2];
+      empyTable[0][i] = {
+        value: Y[i - 2],
+        isCurrent: false,
+        arrowDir: '',
+      };
     }
 
     // // Fill first column
     for (let i = 2; i < X.length + 2; i++) {
-      empyTable[i][0] = X[i - 2];
+      empyTable[i][0] = {
+        value: X[i - 2],
+        isCurrent: false,
+        arrowDir: '',
+      };
     }
 
     // Fill with empty spaces.
     for (let i = 1; i < Y.length + 2; i++) {
       for (let j = 1; j < X.length + 2; j++) {
-        empyTable[j][i] = ' ';
+        empyTable[j][i] = { value: '', isCurrent: false, arrowDir: '' };
       }
     }
     setTable([...empyTable]);
-    await sleep(1000);
+
     // Que el algoritmo se esté ejecutando sobre una copia del arreglo, al momento
     // de insertar elementos se inserten sobre la copia que se va a modificar
     const L = [];
@@ -82,18 +89,43 @@ const DPTable = () => {
     }
     for (let i = 0; i <= m; i++) {
       for (let j = 0; j <= n; j++) {
-        await sleep(100);
-        setTable([...empyTable]);
+        // Just for setting arrow direction
+
         if (i === 0 || j === 0) {
           L[i][j] = 0;
-          empyTable[i + 1][j + 1] = 0;
+          empyTable[i + 1][j + 1] = {
+            value: 0,
+            isCurrent: true,
+            arrowDir: '',
+          };
         } else if (X[i - 1] === Y[j - 1]) {
           L[i][j] = L[i - 1][j - 1] + 1;
-          empyTable[i + 1][j + 1] = L[i - 1][j - 1] + 1;
+          empyTable[i + 1][j + 1] = {
+            value: L[i - 1][j - 1] + 1,
+            isCurrent: true,
+            arrowDir: 'corner',
+          };
+        } else if (L[i - 1][j] >= L[i][j - 1]) {
+          L[i][j] = L[i - 1][j];
+          empyTable[i + 1][j + 1] = {
+            value: L[i - 1][j],
+            isCurrent: true,
+            arrowDir: 'up',
+          };
         } else {
-          L[i][j] = Math.max(L[i - 1][j], L[i][j - 1]);
-          empyTable[i + 1][j + 1] = Math.max(L[i - 1][j], L[i][j - 1]);
+          L[i][j] = L[i][j - 1];
+          empyTable[i + 1][j + 1] = {
+            value: L[i][j - 1],
+            isCurrent: true,
+            arrowDir: 'left',
+          };
         }
+
+        await sleep(100);
+        setTable([...empyTable]);
+        await sleep(100);
+        setTable([...empyTable]);
+        empyTable[i + 1][j + 1].isCurrent = false;
       }
     }
 
@@ -159,49 +191,3 @@ const DPTable = () => {
 };
 
 export default DPTable;
-
-// const computeLCS = () => {
-//   // Generate empty table
-//   if (value.length === 0 || secondValue.length === 0) {
-//     toast({
-//       title: 'Hubo un error',
-//       description: 'Ambas cadenas deben tener al menos un caracter.',
-//       status: 'error',
-//       duration: 4000,
-//       isClosable: false,
-//     });
-//     return;
-//   }
-//   console.log(value);
-//   console.log(secondValue);
-
-//   let empyTable = [];
-
-//   // Create columns
-//   for (let i = 0; i < secondValue.length + 1; i++) {
-//     empyTable.push([]);
-//     // Fill first row
-//     for (let i = 1; i < value.length + 1; i++) {
-//       empyTable[0][i] = value[i - 1];
-//     }
-//   }
-//   empyTable[0][0] = '*';
-
-//   // // Fill first column
-//   for (let i = 1; i < secondValue.length + 1; i++) {
-//     empyTable[i][0] = secondValue[i - 1];
-//   }
-
-//   // Fill with zeros
-//   for (let i = 1; i < value.length + 1; i++) {
-//     for (let j = 1; j < secondValue.length + 1; j++) {
-//       empyTable[j][i] = '0';
-//     }
-//   }
-//   // console.log(empyTable);
-//   setTable(empyTable);
-// };
-
-// const computeLCS = () => {
-//   computeLCS();
-// };
