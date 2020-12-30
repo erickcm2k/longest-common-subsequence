@@ -7,7 +7,6 @@ import {
   InputLeftAddon,
   Stack,
   useToast,
-  flexbox,
 } from '@chakra-ui/react';
 import Table from './Table';
 import './table.css';
