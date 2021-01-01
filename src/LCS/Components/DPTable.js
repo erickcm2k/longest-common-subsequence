@@ -7,6 +7,12 @@ import {
   InputLeftAddon,
   Stack,
   useToast,
+  Text,
+  Box,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
 } from '@chakra-ui/react';
 import Table from './Table';
 
@@ -23,12 +29,14 @@ const DPTable = () => {
     window.location.reload();
   };
   const [table, setTable] = useState();
-
+  const [longestCommonSubsequence, setLongestCommonSubsequence] = useState('');
+  const [speed, setSpeed] = useState(50);
   const sleep = time => {
     return new Promise(resolve => setTimeout(resolve, time));
   };
 
-  const computeLCS = async () => {
+  const generateDPTable = async () => {
+    setLongestCommonSubsequence('');
     if (value.length === 0 || secondValue.length === 0) {
       toast({
         title: 'Hubo un error',
@@ -90,7 +98,6 @@ const DPTable = () => {
     for (let i = 0; i <= m; i++) {
       for (let j = 0; j <= n; j++) {
         // Just for setting arrow direction
-
         if (i === 0 || j === 0) {
           L[i][j] = 0;
           empyTable[i + 1][j + 1] = {
@@ -99,6 +106,15 @@ const DPTable = () => {
             arrowDir: '',
           };
         } else if (X[i - 1] === Y[j - 1]) {
+          // Animate comparison
+          empyTable[i][j + 1].isBeingCompared = true;
+          empyTable[i + 1][j].isBeingCompared = true;
+          setTable([...empyTable]);
+          await sleep(150 * (speed / 50));
+          empyTable[i][j + 1].isBeingCompared = false;
+          empyTable[i + 1][j].isBeingCompared = false;
+
+          // Assing value and arrow direction
           L[i][j] = L[i - 1][j - 1] + 1;
           empyTable[i + 1][j + 1] = {
             value: L[i - 1][j - 1] + 1,
@@ -106,6 +122,15 @@ const DPTable = () => {
             arrowDir: 'corner',
           };
         } else if (L[i - 1][j] >= L[i][j - 1]) {
+          // Animate comparison
+          empyTable[i][j + 1].isBeingCompared = true;
+          empyTable[i + 1][j].isBeingCompared = true;
+          setTable([...empyTable]);
+          await sleep(150 * (speed / 50));
+          empyTable[i][j + 1].isBeingCompared = false;
+          empyTable[i + 1][j].isBeingCompared = false;
+
+          // Assing value and arrow direction
           L[i][j] = L[i - 1][j];
           empyTable[i + 1][j + 1] = {
             value: L[i - 1][j],
@@ -113,6 +138,15 @@ const DPTable = () => {
             arrowDir: 'up',
           };
         } else {
+          // Animate comparison
+          empyTable[i][j + 1].isBeingCompared = true;
+          empyTable[i + 1][j].isBeingCompared = true;
+          setTable([...empyTable]);
+          await sleep(150 * (speed / 50));
+          empyTable[i][j + 1].isBeingCompared = false;
+          empyTable[i + 1][j].isBeingCompared = false;
+
+          // Assing value and arrow direction
           L[i][j] = L[i][j - 1];
           empyTable[i + 1][j + 1] = {
             value: L[i][j - 1],
@@ -121,20 +155,60 @@ const DPTable = () => {
           };
         }
 
-        await sleep(100);
         setTable([...empyTable]);
-        await sleep(100);
+        await sleep(200 * (speed / 50));
+
+        // Animate current value
         setTable([...empyTable]);
         empyTable[i + 1][j + 1].isCurrent = false;
       }
     }
 
-    setTable(empyTable);
+    /*
+    
+    Get the LCS
+    
+    */
+    // Create a character array to store the lcs string
+    let lcsStr = [];
+
+    // Start from the right-most-bottom-most corner and
+    // one by one store characters in lcs[]
+    let index = L[m][n];
+    let i = m,
+      j = n;
+    while (i > 0 && j > 0) {
+      // If current character in X[] and Y are same, then
+      // current character is part of LCS
+      if (X[i - 1] === Y[j - 1]) {
+        lcsStr[index - 1] = X[i - 1]; // Put current character in result
+        setLongestCommonSubsequence(lcsStr);
+        i--;
+        j--;
+        index--; // reduce values of i, j and index
+        setTable([...empyTable]);
+        await sleep(700 * (speed / 50));
+        empyTable[0][j + 2].isTrack = true;
+        empyTable[i + 2][0].isTrack = true;
+
+        empyTable[i + 2][j + 2].isTrack = true;
+      }
+      // If not same, then find the larger of two and
+      // go in the direction of larger value
+      else if (L[i - 1][j] > L[i][j - 1]) {
+        i--;
+      } else {
+        j--;
+        empyTable[i + 1][j + 2].isTrack = true;
+      }
+    }
+
+    return lcsStr;
   };
 
   const handleAnimation = async () => {
     setIsLoading(true);
-    await computeLCS();
+    await generateDPTable();
     setIsLoading(false);
   };
 
@@ -170,6 +244,28 @@ const DPTable = () => {
               disabled={isLoading}
             />
           </InputGroup>
+
+          {/* <label htmlFor="speedSlider">Velocidad x{speed}</label>
+          <input
+            disabled={isLoading}
+            type="range"
+            id="speedSlider"
+            onChange={e => setSpeed(e.target.value / 50)}
+          /> */}
+          <Text htmlFor="speedSlider"> Velocidad X{speed / 50}</Text>
+          <Slider
+            id="speedSlider"
+            aria-label="slider-ex-1"
+            defaultValue={speed}
+            value={speed}
+            disabled={isLoading}
+            onChange={val => setSpeed(val)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
           <Button
             colorScheme="green"
             fontWeight="bold"
@@ -178,10 +274,25 @@ const DPTable = () => {
           >
             Calcular
           </Button>
+
           {isLoading && (
             <Button colorScheme="red" fontWeight="bold" onClick={refreshPage}>
               Interrumpir
             </Button>
+          )}
+          {longestCommonSubsequence.length > 0 && (
+            <Box
+              bg="brand.botticelli"
+              borderRadius="1rem"
+              p={['2', '3', '4', '5']}
+            >
+              <Text fontSize={['lg', 'lg', 'lg', 'xl']}>
+                La subsecuencia común más larga es:
+              </Text>
+              <Text fontSize={['lg', 'lg', 'lg', 'xl']} fontWeight="bold">
+                {longestCommonSubsequence}
+              </Text>
+            </Box>
           )}
         </Stack>
       </Container>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box } from '@chakra-ui/react';
+import { Grid, Box, Flex } from '@chakra-ui/react';
 import {
   ArrowUpIcon as ArrowUp,
   ArrowBackIcon as ArrowLeft,
@@ -40,13 +40,26 @@ const getBgColor = cell => {
     bgColor = 'tomato';
   }
 
+  if (cell.isBeingCompared) {
+    bgColor = 'brand.botticelli';
+  }
+
+  if(cell.isTrack) {
+    bgColor = 'orange.500'
+  }
+
   return bgColor;
 };
 
 // Renders dp table
 const Table = props => {
   return (
-    <>
+    <Flex
+      style={{
+        paddingBottom: props.table ? '10rem' : '35rem',
+        display: 'block',
+      }}
+    >
       {/* Ensures that a table exists */}
       {props.table ? (
         <Grid
@@ -65,7 +78,7 @@ const Table = props => {
                 color="white"
                 bg={getBgColor(cell)}
                 textAlign="center"
-                key={Math.random()}
+                key={Math.random() * (1000 - 0 + 1) + 0}
               >
                 {getArrowIcon(cell.arrowDir)} {cell.value}
               </Box>
@@ -73,7 +86,7 @@ const Table = props => {
           )}
         </Grid>
       ) : null}
-    </>
+    </Flex>
   );
 };
 

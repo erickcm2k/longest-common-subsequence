@@ -8,7 +8,6 @@ function lcs(X, Y, m, n) {
   /* Following steps build L[m+1][n+1] in bottom up fashion. Note
       that L[i][j] contains length of LCS of X[0..i-1] and Y[0..j-1] */
   for (let i = 0; i <= m; i++) {
-    console.log(i, L);
     for (let j = 0; j <= n; j++) {
       if (i === 0 || j === 0) {
         L[i][j] = 0;
