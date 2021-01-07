@@ -12,8 +12,6 @@ const Landing = () => {
     <>
       <Container width={['100%', '90%', '90%', '90%']} maxW="90rem">
         <Hero />
-        <Subsequence />
-        <DescriptionSection />
         <Flex justifyContent="center" pt='5'>
           <Link to={`/lcs`}>
             <Button bg="brand.morningGlory" width='15rem' color="brand.stratos">
@@ -21,6 +19,8 @@ const Landing = () => {
             </Button>
           </Link>
         </Flex>
+        <Subsequence />
+        <DescriptionSection />
         <ImplementationsText />
         <CodeSection />
       </Container>
