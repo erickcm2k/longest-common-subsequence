@@ -11,12 +11,13 @@ const CodeSection = () => {
     <section className='code-section'>
       <Flex
         maxW={'90rem'}
-        // border="1px solid red"
         flexDir={['column', 'column','column', 'row']}
         justifyContent='space-evenly'
+        pt="5"
       >
-        <Box w={["100%", "100%","90%","45%"]} alignSelf={['inherit', 'inherit', 'center', 'inherit']}>
-          <Text textAlign='center' fontSize={['lg','lg', 'xl', '2xl']} color='brand.regalBlue' fontWeight='bold'>Implementación Iterativa</Text>
+        <Box w={["100%", "100%","90%","45%"]} alignSelf={['inherit', 'inherit', 'center', 'inherit']} pb="3">
+          <Text textAlign='center' fontSize={['lg','lg', 'xl', '2xl']} color='brand.regalBlue' fontWeight='bold'>Bottom Up - iterativa</Text>
+          <Text textAlign='center' fontSize={['lg','lg', 'xl', '2xl']} color='brand.regalBlue'>Complejidad ~ O(mn)</Text>
           <pre>
             <code className="language-javascript">
               {`
@@ -90,12 +91,12 @@ int main()
 }
 `}
             </code>
-          </pre>
-          <Text textAlign='center' fontSize={['lg','lg', 'xl', '2xl']} color='brand.regalBlue' fontWeight='bold'>Descripción versión Iterativa</Text>
+          </pre>          
         </Box>
 
-        <Box w={["100%", "100%","90%","45%"]} alignSelf={['inherit', 'inherit', 'center', 'inherit']}>
-          <Text textAlign='center' fontSize={['lg','lg', 'xl', '2xl']} color='brand.regalBlue' fontWeight='bold'>Implementación Recursiva</Text>
+        <Box w={["100%", "100%","90%","45%"]} alignSelf={['inherit', 'inherit', 'center', 'inherit']} pb="3">
+          <Text textAlign='center' fontSize={['lg','lg', 'xl', '2xl']} color='brand.regalBlue' fontWeight='bold'>Top Down - recursión con memoización</Text>
+          <Text textAlign='center' fontSize={['lg','lg', 'xl', '2xl']} color='brand.regalBlue'>Complejidad ~ O(mn)</Text>
           <pre>
             <code className="language-javascript">
               {`
@@ -183,7 +184,6 @@ int main()
 `}
             </code>
           </pre>
-          <Text textAlign='center' fontSize={['lg','lg', 'xl', '2xl']} color='brand.regalBlue' fontWeight='bold'>Descripción versión Recursiva</Text>
         </Box>
       </Flex>
     </section>

@@ -4,6 +4,14 @@ import { QuestionIcon } from '@chakra-ui/icons';
 const NavLinks = props => {
   return (
     <>
+      <ListItem
+        my="2"
+        mx="2"
+        color={props.textColor || 'white'}
+        listStyleType="none"
+      >
+        Acerca de
+      </ListItem>
       <Button
         my="2"
         mx="2"
@@ -13,14 +21,6 @@ const NavLinks = props => {
       >
         Ayuda
       </Button>
-      <ListItem
-        my="2"
-        mx="2"
-        color={props.textColor || 'white'}
-        listStyleType="none"
-      >
-        Acerca de
-      </ListItem>
     </>
   );
 };
