@@ -16,14 +16,14 @@ const Footer = () => {
           pb="1rem"
           fontWeight="bold"
           fontSize={['1rem', '1.2rem', '1.5rem', '1.5rem']}
-          color="brand.botticelli"
+          color="white"
         >
           Desarrollo
         </Text>
         <List styleType="disc">
-          <ListItem color="brand.botticelli">Alamo Ramos Luis Alberto</ListItem>
-          <ListItem color="brand.botticelli">Camacho Soto Kevin</ListItem>
-          <ListItem color="brand.botticelli">Castañeda Martínez Erick</ListItem>
+          <ListItem color="white">Alamo Ramos Luis Alberto</ListItem>
+          <ListItem color="white">Camacho Soto Kevin</ListItem>
+          <ListItem color="white">Castañeda Martínez Erick</ListItem>
         </List>
       </Box>
     </Flex>

@@ -13,6 +13,7 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
+  Flex,
 } from '@chakra-ui/react';
 import Table from './Table';
 
@@ -223,6 +224,7 @@ const DPTable = () => {
               fontWeight="bold"
             />
             <Input
+              bg="white"
               maxLength="10"
               color="brand.stratos"
               value={value}
@@ -237,6 +239,7 @@ const DPTable = () => {
               fontWeight="bold"
             />
             <Input
+              bg="white"
               maxLength="10"
               color="brand.stratos"
               value={secondValue}
@@ -245,13 +248,6 @@ const DPTable = () => {
             />
           </InputGroup>
 
-          {/* <label htmlFor="speedSlider">Velocidad x{speed}</label>
-          <input
-            disabled={isLoading}
-            type="range"
-            id="speedSlider"
-            onChange={e => setSpeed(e.target.value / 50)}
-          /> */}
           <Text htmlFor="speedSlider"> Velocidad X{speed / 50}</Text>
           <Slider
             id="speedSlider"
@@ -261,8 +257,8 @@ const DPTable = () => {
             disabled={isLoading}
             onChange={val => setSpeed(val)}
           >
-            <SliderTrack>
-              <SliderFilledTrack />
+            <SliderTrack bg="white">
+              <SliderFilledTrack bg="brand.bondiBlue" />
             </SliderTrack>
             <SliderThumb />
           </Slider>
@@ -282,7 +278,7 @@ const DPTable = () => {
           )}
           {longestCommonSubsequence.length > 0 && (
             <Box
-              bg="brand.botticelli"
+              bg="brand.morningGlory"
               borderRadius="1rem"
               p={['2', '3', '4', '5']}
             >
@@ -296,7 +292,9 @@ const DPTable = () => {
           )}
         </Stack>
       </Container>
-      <Table table={table}></Table>
+      <Flex width="100%" margin="0 auto" justifyContent="center">
+        <Table table={table}></Table>
+      </Flex>
     </>
   );
 };

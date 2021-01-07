@@ -2,11 +2,11 @@ import React from 'react';
 import { Container, Text, Button } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
-import InputReaders from '../Components/InputReaders';
+import DPTable from '../Components/DPTable';
 
 const LCS = () => {
   return (
-    <Container mt="3" width="90%" maxW={'90rem'}>
+    <Container pt="3" width="90%" maxW="90rem">
       <Link to={`/`}>
         <Button
           leftIcon={<ArrowBackIcon />}
@@ -22,12 +22,12 @@ const LCS = () => {
         fontWeight="bold"
         textAlign="center"
       >
-        Usando Programación Dinámica
+        Tabla de Programación Dinámica
       </Text>
-      <Button bg="brand.stratos" color="white">
+      {/* <Button bg="brand.stratos" color="white">
         Cambiar a recursividad
-      </Button>
-      <InputReaders />
+      </Button> */}
+      <DPTable />
     </Container>
   );
 };

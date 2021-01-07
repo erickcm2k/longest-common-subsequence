@@ -27,7 +27,6 @@ const MainNavigation = () => {
         display="flex"
         flexDirection="row"
         alignItems="center"
-        justifyContent="space-between"
         height="4rem"
       >
         <ListItem
@@ -68,9 +67,10 @@ const MainNavigation = () => {
                     <UnorderedList
                       display="flex"
                       flexDirection="column"
-                      justifyContent="space-between"
+                      justifyContent="flex-start"
+                      height="100%"
                     >
-                      <NavLinks textColor="brand.stratos" patop="5" />
+                      <NavLinks textColor="brand.stratos" />
                     </UnorderedList>
                   </DrawerBody>
                 </DrawerContent>

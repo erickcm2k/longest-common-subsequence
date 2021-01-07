@@ -44,8 +44,8 @@ const getBgColor = cell => {
     bgColor = 'brand.botticelli';
   }
 
-  if(cell.isTrack) {
-    bgColor = 'orange.500'
+  if (cell.isTrack) {
+    bgColor = 'orange.500';
   }
 
   return bgColor;
@@ -55,6 +55,7 @@ const getBgColor = cell => {
 const Table = props => {
   return (
     <Flex
+      width={['100%', '100%', '100%', '70%']}
       style={{
         paddingBottom: props.table ? '10rem' : '35rem',
         display: 'block',
@@ -63,9 +64,10 @@ const Table = props => {
       {/* Ensures that a table exists */}
       {props.table ? (
         <Grid
-          bg="brand.botticelli"
+          bg="brand.morningGlory"
           mt="5"
           mb="5"
+          p="2"
           templateColumns={`repeat(${props.table[0].length}, 1fr)`}
           templateRows={`repeat(${props.table.length - 1}, 1fr)`}
           gap={1}
