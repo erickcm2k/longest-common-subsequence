@@ -17,9 +17,6 @@ import {
 } from '@chakra-ui/react';
 import Table from './Table';
 
-// Method: Iterative Bottom-Up
-// Table proccess: Top-Down
-
 const DPTable = () => {
   const toast = useToast();
   const [value, setValue] = useState('AGGTAB');
@@ -251,7 +248,7 @@ const DPTable = () => {
             />
           </InputGroup>
 
-          <Text htmlFor="speedSlider"> Velocidad X{speed / 50}</Text>
+          <Text> Velocidad X{speed / 50}</Text>
           <Slider
             id="speedSlider"
             aria-label="slider-ex-1"
