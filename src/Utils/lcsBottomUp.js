@@ -47,7 +47,7 @@ function lcs(X, Y, m, n) {
   let LCS = '';
   lcsStr.forEach(c => (LCS += c));
 
-  // console.log(L);
+  console.table(L);
 
   if (lcsStr.length < 1) {
     return false;

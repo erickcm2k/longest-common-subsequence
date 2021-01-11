@@ -61,15 +61,14 @@ const DPTable = () => {
       empyTable.push([]);
     }
     // Fill first row
-    empyTable[0][0] = { value: '*', isCurrent: false, arrowDir: '' };
-    empyTable[0][1] = { value: '*', isCurrent: false, arrowDir: '' };
-    empyTable[1][0] = { value: '*', isCurrent: false, arrowDir: '' };
+    empyTable[0][0] = { value: '*', isCurrent: false };
+    empyTable[0][1] = { value: '*', isCurrent: false };
+    empyTable[1][0] = { value: '*', isCurrent: false };
 
     for (let i = 2; i < Y.length + 2; i++) {
       empyTable[0][i] = {
         value: Y[i - 2],
         isCurrent: false,
-        arrowDir: '',
       };
     }
 
@@ -78,14 +77,13 @@ const DPTable = () => {
       empyTable[i][0] = {
         value: X[i - 2],
         isCurrent: false,
-        arrowDir: '',
       };
     }
 
     // Fill with empty spaces.
     for (let i = 1; i < Y.length + 2; i++) {
       for (let j = 1; j < X.length + 2; j++) {
-        empyTable[j][i] = { value: '', isCurrent: false, arrowDir: '' };
+        empyTable[j][i] = { value: '', isCurrent: false };
       }
     }
     setTable([...empyTable]);
@@ -104,7 +102,6 @@ const DPTable = () => {
           empyTable[i + 1][j + 1] = {
             value: 0,
             isCurrent: true,
-            arrowDir: '',
           };
         } else if (X[i - 1] === Y[j - 1]) {
           // Animate comparison
@@ -120,7 +117,6 @@ const DPTable = () => {
           empyTable[i + 1][j + 1] = {
             value: L[i - 1][j - 1] + 1,
             isCurrent: true,
-            arrowDir: 'corner',
           };
         } else if (L[i - 1][j] >= L[i][j - 1]) {
           // Animate comparison
@@ -136,7 +132,6 @@ const DPTable = () => {
           empyTable[i + 1][j + 1] = {
             value: L[i - 1][j],
             isCurrent: true,
-            arrowDir: 'up',
           };
         } else {
           // Animate comparison
@@ -152,7 +147,6 @@ const DPTable = () => {
           empyTable[i + 1][j + 1] = {
             value: L[i][j - 1],
             isCurrent: true,
-            arrowDir: 'left',
           };
         }
 

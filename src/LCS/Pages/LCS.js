@@ -3,7 +3,6 @@ import { Container, Text, Button } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 import DPTable from '../Components/DPTable';
-// import RTable from '../Components/RTable';
 
 const LCS = () => {
   return (
@@ -26,7 +25,6 @@ const LCS = () => {
         Tabla de Programación Dinámica
       </Text>
       <DPTable />
-      {/* <RTable /> */}
     </Container>
   );
 };

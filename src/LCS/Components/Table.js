@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, Box, Flex } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import {
-  ArrowUpIcon as ArrowUp,
-  ArrowBackIcon as ArrowLeft,
-  StarIcon as ArrowCorner,
-} from '@chakra-ui/icons';
-
+  BsArrowUp as ArrowUp,
+  BsArrowLeft as ArrowLeft,
+  BsArrowUpLeft as ArrowCorner,
+} from 'react-icons/bs';
 // Determines cell icon.
 const getArrowIcon = direction => {
   let arrowIcon;
@@ -75,12 +75,11 @@ const Table = props => {
           {props.table.map(row =>
             row.map(cell => (
               <Box
-                w="100%"
-                h="10"
+                h="12"
                 color="white"
                 bg={getBgColor(cell)}
                 textAlign="center"
-                key={Math.random() * (1000 - 0 + 1) + 0}
+                key={uuidv4()}
               >
                 {getArrowIcon(cell.arrowDir)} {cell.value}
               </Box>
