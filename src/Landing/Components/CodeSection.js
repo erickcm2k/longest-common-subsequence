@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Prism from 'prismjs';
 import { Flex, Text, Box } from '@chakra-ui/react';
-import './prism.css';
+import '../../Shared/prism.css';
 const CodeSection = () => {
   useEffect(() => {
     Prism.highlightAll();

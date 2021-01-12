@@ -15,10 +15,12 @@ import {
   SliderThumb,
   Flex,
 } from '@chakra-ui/react';
+
 import Table from './Table';
+import DPCode from './DPCode';
 
 // Method: Iterative Bottom-Up
-// Table proccess: Top-Down
+// Table fill: Top-Down
 
 const DPTable = () => {
   const toast = useToast();
@@ -35,6 +37,7 @@ const DPTable = () => {
   const [table, setTable] = useState();
   const [longestCommonSubsequence, setLongestCommonSubsequence] = useState('');
   const [speed, setSpeed] = useState(50);
+  const [currentCodeLine, setCurrentCodeLine] = useState(0);
   const sleep = time => {
     return new Promise(resolve => setTimeout(resolve, time));
   };
@@ -103,13 +106,14 @@ const DPTable = () => {
       for (let j = 0; j <= n; j++) {
         // Just for setting arrow direction
         if (i === 0 || j === 0) {
+          setCurrentCodeLine(4);
           L[i][j] = 0;
           empyTable[i + 1][j + 1] = {
             value: 0,
             isCurrent: true,
-            arrowDir: '',
           };
         } else if (X[i - 1] === Y[j - 1]) {
+          setCurrentCodeLine(6);
           // Animate comparison
           empyTable[i][j + 1].isBeingCompared = true;
           empyTable[i + 1][j].isBeingCompared = true;
@@ -126,6 +130,7 @@ const DPTable = () => {
             arrowDir: 'corner',
           };
         } else if (L[i - 1][j] >= L[i][j - 1]) {
+          setCurrentCodeLine(7);
           // Animate comparison
           empyTable[i][j + 1].isBeingCompared = true;
           empyTable[i + 1][j].isBeingCompared = true;
@@ -142,6 +147,7 @@ const DPTable = () => {
             arrowDir: 'up',
           };
         } else {
+          setCurrentCodeLine(7);
           // Animate comparison
           empyTable[i][j + 1].isBeingCompared = true;
           empyTable[i + 1][j].isBeingCompared = true;
@@ -158,7 +164,8 @@ const DPTable = () => {
             arrowDir: 'left',
           };
         }
-
+        await sleep(10 * (speed / 50));
+        setCurrentCodeLine(0);
         setTable([...empyTable]);
         await sleep(200 * (speed / 50));
 
@@ -295,8 +302,15 @@ const DPTable = () => {
           )}
         </Stack>
       </Container>
-      <Flex width="100%" margin="0 auto" justifyContent="center">
+      <Flex
+        width="100%"
+        alignContent="center"
+        flexDir={['column', 'column', 'column', 'row']}
+      >
         <Table table={table}></Table>
+        <Box p="2" alignSelf="center">
+          <DPCode currentCodeLine={currentCodeLine} />
+        </Box>
       </Flex>
     </>
   );

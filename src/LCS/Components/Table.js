@@ -57,7 +57,7 @@ const Table = props => {
     <Flex
       width={['100%', '100%', '100%', '70%']}
       style={{
-        paddingBottom: props.table ? '10rem' : '35rem',
+        // paddingBottom: props.table ? '10rem' : '35rem',
         display: 'block',
       }}
     >
