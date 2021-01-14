@@ -1,55 +1,54 @@
-
-const X = 'FVDVSDCASA';
-const Y = 'SCSVDR';
+// const X = 'FVDVSDCASA';
+// const Y = 'SCSVDR';
+const X = 'DSCDSDSC';
+const Y = 'SDVFSSD';
 // const X = 'AGGTAB';
 // const Y = 'GXTXAYB';
 let L = [];
 for (let i = 0; i < X.length + 1; i++) {
-  L.push([]);
-}
-
-// Fill table with zeros.
-for (let i = 0; i < Y.length ; i++) {
-  for (let j = 0; j < X.length ; j++) {
-    L[j][i] = 'x';
+  L[i] = [];
+  for (let j = 0; j < Y.length + 1; j++) {
+    L[i][j] = -1;
   }
 }
 
+let operations = 0;
+
 function LCS(S1, m, S2, n) {
+  operations++;
   let finalResult;
-  if (m === 0 || n === 0) {
+  if (L[m][n] > -1) {
+    return L[m][n];
+  } else if (m === 0 || n === 0) {
     finalResult = 0;
-    L[m][n] = 0;
+    L[m][n] = finalResult;
   } else if (S1[m - 1] === S2[n - 1]) {
     finalResult = 1 + LCS(S1, m - 1, S2, n - 1);
-    L[m - 1][n - 1] = finalResult;
-  } else if (LCS(S1, m - 1, S2, n) >= LCS(S1, m, S2, n - 1)) {
-    finalResult = LCS(S1, m - 1, S2, n);
-    L[m - 1][n] = finalResult;
+    L[m][n] = finalResult;
   } else {
-    finalResult = LCS(S1, m, S2, n - 1);
-    L[m][n - 1] = finalResult;
+    finalResult = Math.max(LCS(S1, m - 1, S2, n), LCS(S1, m, S2, n - 1));
+    L[m][n] = finalResult;
   }
 
   return finalResult;
 }
 
-let px = X.length;
-let py = Y.length;
+let i = X.length;
+let j = Y.length;
 
-function printLCS() {
+function printLCSString() {
   let res = [];
 
-  while (px !== 0 && py !== 0) {
-    if (X[px - 1] === Y[py - 1]) {
-      res.unshift(X[px - 1]);
-      px--;
-      py--;
+  while (i > 0 && j > 0) {
+    if (X[i - 1] === Y[j - 1]) {
+      res.unshift(X[i - 1]);
+      i--;
+      j--;
     } else {
-      if (L[px - 1][py] > L[px][py - 1]) {
-        px--;
+      if (L[i - 1][j] > L[i][j - 1]) {
+        i--;
       } else {
-        py--;
+        j--;
       }
     }
   }
@@ -57,58 +56,29 @@ function printLCS() {
 }
 
 // const lcs = LCSLength(X, X.length, Y, Y.length);
+// const lcs = findLCS(X, Y, X.length, Y.length);
 const lcs = LCS(X, X.length, Y, Y.length);
 console.table(L);
 console.log(lcs);
-printLCS();
+printLCSString();
+console.log(operations);
 
-// // console.log(L[0].length);
-// console.log(L.length, L[0].length);
-// // console.log(`px: ${px}, py: ${py}`);
-// console.log(lcs);
-
-// function LCSLength(S1, m, S2, n) {
-//   let finalResult;
-//   if (m === 0 || n === 0) {
-//     finalResult = 0;
-//   } else if (S1[m - 1] === S2[n - 1]) {
-//     finalResult = 1 + LCS(S1, m - 1, S2, n - 1);
-//   } else if (LCS(S1, m - 1, S2, n) >= LCS(S1, m, S2, n - 1)) {
-//     finalResult = LCS(S1, m - 1, S2, n);
-//   } else {
-//     finalResult = LCS(S1, m, S2, n - 1);
-//   }
-
-//   return finalResult;
-// }
-
+// Working!!!!!
 // function LCS(S1, m, S2, n) {
 //   let finalResult;
-//   //define base case. if the length of either strings are zero,
-//   //then no need to continue return 0
 //   if (m === 0 || n === 0) {
-//     L[m][n] = 0;
 //     finalResult = 0;
+//     L[m][n] = 0;
 //   } else if (S1[m - 1] === S2[n - 1]) {
-//     //if the last characters are the same
 //     finalResult = 1 + LCS(S1, m - 1, S2, n - 1);
-//     // if (m !== S1.length && n !== S2.length) {
-//     L[m - 1][n - 1] = finalResult;
-//     // }
+//     L[m][n] = finalResult;
+//   } else if (LCS(S1, m - 1, S2, n) >= LCS(S1, m, S2, n - 1)) {
+//     finalResult = LCS(S1, m - 1, S2, n);
+//     L[m][n] = finalResult;
 //   } else {
-//     let excludeLastOfS1 = LCS(S1, m - 1, S2, n);
-//     let excludeLastOfS2 = LCS(S1, m, S2, n - 1);
-//     finalResult = Math.max(excludeLastOfS1, excludeLastOfS2);
-//     if (excludeLastOfS1 >= excludeLastOfS2) {
-//       // if (m !== S1.length && n !== S2.length) {
-//       L[m - 1][n] = finalResult;
-//       // }
-//     } else {
-//       // if (m !== S1.length && n !== S2.length) {
-//       L[m][n - 1] = finalResult;
-//       // }
-//     }
+//     finalResult = LCS(S1, m, S2, n - 1);
+//     L[m][n] = finalResult;
 //   }
-//   //return the final result
+
 //   return finalResult;
 // }
