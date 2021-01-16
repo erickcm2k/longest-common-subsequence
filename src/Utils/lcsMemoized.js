@@ -1,84 +1,77 @@
-// const X = 'FVDVSDCASA';
-// const Y = 'SCSVDR';
-const X = 'DSCDSDSC';
-const Y = 'SDVFSSD';
-// const X = 'AGGTAB';
-// const Y = 'GXTXAYB';
-let L = [];
-for (let i = 0; i < X.length + 1; i++) {
-  L[i] = [];
-  for (let j = 0; j < Y.length + 1; j++) {
-    L[i][j] = -1;
-  }
-}
-
 let operations = 0;
+const fillTable = (X, Y, memoTable) => {
+  for (let i = 0; i < X.length + 1; i++) {
+    memoTable[i] = [];
+    for (let j = 0; j < Y.length + 1; j++) {
+      memoTable[i][j] = -1;
+    }
+  }
+};
 
-function LCS(S1, m, S2, n) {
+const lcs = (S1, m, S2, n, memoTable) => {
   operations++;
   let finalResult;
-  if (L[m][n] > -1) {
-    return L[m][n];
+  if (memoTable[m][n] > -1) {
+    return memoTable[m][n];
   } else if (m === 0 || n === 0) {
     finalResult = 0;
-    L[m][n] = finalResult;
+    memoTable[m][n] = finalResult;
   } else if (S1[m - 1] === S2[n - 1]) {
-    finalResult = 1 + LCS(S1, m - 1, S2, n - 1);
-    L[m][n] = finalResult;
+    finalResult = 1 + lcs(S1, m - 1, S2, n - 1, memoTable);
+    memoTable[m][n] = finalResult;
   } else {
-    finalResult = Math.max(LCS(S1, m - 1, S2, n), LCS(S1, m, S2, n - 1));
-    L[m][n] = finalResult;
+    finalResult = Math.max(
+      lcs(S1, m - 1, S2, n, memoTable),
+      lcs(S1, m, S2, n - 1, memoTable)
+    );
+    memoTable[m][n] = finalResult;
   }
 
   return finalResult;
-}
+};
 
-let i = X.length;
-let j = Y.length;
-
-function printLCSString() {
-  let res = [];
+function getLCS(X, Y, m, n, memoTable) {
+  let lcsString = '';
+  let i = m;
+  let j = n;
 
   while (i > 0 && j > 0) {
     if (X[i - 1] === Y[j - 1]) {
-      res.unshift(X[i - 1]);
+      lcsString = X[i - 1] + lcsString;
       i--;
       j--;
     } else {
-      if (L[i - 1][j] > L[i][j - 1]) {
+      if (memoTable[i - 1][j] > memoTable[i][j - 1]) {
         i--;
       } else {
         j--;
       }
     }
   }
-  console.log(res);
+  return lcsString;
 }
 
-// const lcs = LCSLength(X, X.length, Y, Y.length);
-// const lcs = findLCS(X, Y, X.length, Y.length);
-const lcs = LCS(X, X.length, Y, Y.length);
-console.table(L);
-console.log(lcs);
-printLCSString();
-console.log(operations);
+const lcsAux = (X, Y, m, n, memoTable) => {
+  fillTable(X, Y, memoTable);
+  console.table(memoTable);
+  lcs(X, m, Y, n, memoTable);
+};
 
-// Working!!!!!
-// function LCS(S1, m, S2, n) {
-//   let finalResult;
-//   if (m === 0 || n === 0) {
-//     finalResult = 0;
-//     L[m][n] = 0;
-//   } else if (S1[m - 1] === S2[n - 1]) {
-//     finalResult = 1 + LCS(S1, m - 1, S2, n - 1);
-//     L[m][n] = finalResult;
-//   } else if (LCS(S1, m - 1, S2, n) >= LCS(S1, m, S2, n - 1)) {
-//     finalResult = LCS(S1, m - 1, S2, n);
-//     L[m][n] = finalResult;
-//   } else {
-//     finalResult = LCS(S1, m, S2, n - 1);
-//     L[m][n] = finalResult;
-//   }
+const main = () => {
+  const X = 'FVDVSDCASA';
+  const Y = 'SCSVDR';
+  // const X = 'DSCDSDSC';
+  // const Y = 'SDVFSSD';
+  // const X = 'AGGTAB';
+  // const Y = 'GXTXAYB';
+  const m = X.length;
+  const n = Y.length;
+  let memoTable = [];
 
-//   return finalResult;
-// }
+  lcsAux(X, Y, m, n, memoTable);
+  console.table(memoTable);
+  console.log(getLCS(X, Y, m, n, memoTable));
+  console.log('Operations:', operations);
+};
+
+main();

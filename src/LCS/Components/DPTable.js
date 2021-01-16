@@ -103,16 +103,26 @@ const DPTable = () => {
       L.push([]);
     }
     for (let i = 0; i <= m; i++) {
+      setCurrentCodeLine(1);
+      await sleep(150 * (speed / 50));
+
       for (let j = 0; j <= n; j++) {
+        setCurrentCodeLine(2);
+        await sleep(150 * (speed / 50));
         // Just for setting arrow direction
         if (i === 0 || j === 0) {
+          setCurrentCodeLine(3);
+          await sleep(150 * (speed / 50));
           setCurrentCodeLine(4);
+
           L[i][j] = 0;
           empyTable[i + 1][j + 1] = {
             value: 0,
             isCurrent: true,
           };
         } else if (X[i - 1] === Y[j - 1]) {
+          setCurrentCodeLine(5);
+          await sleep(150 * (speed / 50));
           setCurrentCodeLine(6);
           // Animate comparison
           empyTable[i][j + 1].isBeingCompared = true;
@@ -131,6 +141,8 @@ const DPTable = () => {
           };
         } else if (L[i - 1][j] >= L[i][j - 1]) {
           setCurrentCodeLine(7);
+          await sleep(150 * (speed / 50));
+          setCurrentCodeLine(8);
           // Animate comparison
           empyTable[i][j + 1].isBeingCompared = true;
           empyTable[i + 1][j].isBeingCompared = true;
@@ -148,6 +160,8 @@ const DPTable = () => {
           };
         } else {
           setCurrentCodeLine(7);
+          await sleep(150 * (speed / 50));
+          setCurrentCodeLine(8);
           // Animate comparison
           empyTable[i][j + 1].isBeingCompared = true;
           empyTable[i + 1][j].isBeingCompared = true;
@@ -164,7 +178,7 @@ const DPTable = () => {
             arrowDir: 'left',
           };
         }
-        await sleep(10 * (speed / 50));
+        await sleep(150 * (speed / 50));
         setCurrentCodeLine(0);
         setTable([...empyTable]);
         await sleep(200 * (speed / 50));
@@ -180,40 +194,58 @@ const DPTable = () => {
     Get the LCS
     
     */
-    // Create a character array to store the lcs string
+
     let lcsStr = [];
 
-    // Start from the right-most-bottom-most corner and
-    // one by one store characters in lcs[]
     let index = L[m][n];
     let i = m,
       j = n;
+    setCurrentCodeLine(11);
+    await sleep(1000 * (speed / 50));
     while (i > 0 && j > 0) {
-      // If current character in X[] and Y are same, then
-      // current character is part of LCS
       if (X[i - 1] === Y[j - 1]) {
-        lcsStr[index - 1] = X[i - 1]; // Put current character in result
+        lcsStr[index - 1] = X[i - 1];
+        setCurrentCodeLine(22);
+        await sleep(1000 * (speed / 50));
+        setCurrentCodeLine(33);
+
         setLongestCommonSubsequence(lcsStr);
         i--;
         j--;
-        index--; // reduce values of i, j and index
+        index--;
         setTable([...empyTable]);
-        await sleep(700 * (speed / 50));
         empyTable[0][j + 2].isTrack = true;
         empyTable[i + 2][0].isTrack = true;
-
         empyTable[i + 2][j + 2].isTrack = true;
-      }
-      // If not same, then find the larger of two and
-      // go in the direction of larger value
-      else if (L[i - 1][j] > L[i][j - 1]) {
+      } else if (L[i - 1][j] > L[i][j - 1]) {
+        setCurrentCodeLine(44);
+        await sleep(1000 * (speed / 50));
+        setCurrentCodeLine(55);
         i--;
+        empyTable[i + 2][j + 1].isTrack = true;
       } else {
+        setCurrentCodeLine(66);
+        await sleep(1000 * (speed / 50));
+        setCurrentCodeLine(77);
         j--;
         empyTable[i + 1][j + 2].isTrack = true;
       }
+      await sleep(1000 * (speed / 50));
+      setCurrentCodeLine(11);
+      await sleep(1000 * (speed / 50));
     }
+    setCurrentCodeLine(0);
 
+    toast({
+      title: 'Cálculo terminado',
+      description:
+        lcsStr.length > 0
+          ? ''
+          : 'No existe un LCS para las cadenas ingresadas.',
+      status: lcsStr.length > 0 ? 'success' : 'warning',
+      duration: lcsStr.length > 0 ? 3000 : 6500,
+      isClosable: false,
+    });
     return lcsStr;
   };
 

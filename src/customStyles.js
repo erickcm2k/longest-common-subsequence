@@ -8,6 +8,7 @@ const customTheme = extendTheme({
       bondiBlue: '#018abe',
       morningGlory: '#97cadb',
       botticelli: '#d6e8ee',
+      successGreen: '#38A169'
     },
   },
 
