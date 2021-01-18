@@ -213,22 +213,25 @@ const DPTable = () => {
         i--;
         j--;
         index--;
-        setTable([...empyTable]);
+
         empyTable[0][j + 2].isTrack = true;
         empyTable[i + 2][0].isTrack = true;
         empyTable[i + 2][j + 2].isTrack = true;
+        setTable([...empyTable]);
       } else if (L[i - 1][j] > L[i][j - 1]) {
         setCurrentCodeLine(44);
         await sleep(1000 * (speed / 50));
         setCurrentCodeLine(55);
         i--;
         empyTable[i + 2][j + 1].isTrack = true;
+        setTable([...empyTable]);
       } else {
         setCurrentCodeLine(66);
         await sleep(1000 * (speed / 50));
         setCurrentCodeLine(77);
         j--;
         empyTable[i + 1][j + 2].isTrack = true;
+        setTable([...empyTable]);
       }
       await sleep(1000 * (speed / 50));
       setCurrentCodeLine(11);
