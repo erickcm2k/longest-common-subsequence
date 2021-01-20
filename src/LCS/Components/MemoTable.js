@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 
 import Table from './Table';
-import DPCode from './DPCode';
+import MemoCode from './MemoCode';
 import { sleep } from '../../Utils/sleep';
 // Method: Iterative Bottom-Up
 // Table fill: Top-Down
@@ -34,7 +34,8 @@ const MemoTable = () => {
   const refreshPage = () => {
     window.location.reload();
   };
-  // const [currentCodeLine, setCurrentCodeLine] = useState(0);
+  const [currentCodeLine, setCurrentCodeLine] = useState(0);
+
   const [table, setTable] = useState();
   const [longestCommonSubsequence, setLongestCommonSubsequence] = useState('');
   const [speed, setSpeed] = useState(50);
@@ -83,31 +84,87 @@ const MemoTable = () => {
   };
 
   // Auxiliary function for memoTableOperations
-  const lcs = (S1, m, S2, n, memoTable, auxMemoTable) => {
+  const lcs = (S1, m, S2, n, memoTable, auxMemoTable, tempState) => {
     let finalResult;
     if (memoTable[m][n] > -1) {
+      tempState.push({ m, n, finalResult: memoTable[m][n], codeLine: 0 });
       return memoTable[m][n];
     } else if (m === 0 || n === 0) {
       finalResult = 0;
       memoTable[m][n] = finalResult;
-      auxMemoTable[m + 1][n + 1] = { value: finalResult };
-      setTable([...auxMemoTable]);
+      tempState.push({ m, n, finalResult, codeLine: 1 });
     } else if (S1[m - 1] === S2[n - 1]) {
-      finalResult = 1 + lcs(S1, m - 1, S2, n - 1, memoTable, auxMemoTable);
+      finalResult =
+        1 + lcs(S1, m - 1, S2, n - 1, memoTable, auxMemoTable, tempState);
       memoTable[m][n] = finalResult;
-      auxMemoTable[m + 1][n + 1] = { value: finalResult };
-      setTable([...auxMemoTable]);
+      tempState.push({ m, n, finalResult, codeLine: 2 });
     } else {
       finalResult = Math.max(
-        lcs(S1, m - 1, S2, n, memoTable, auxMemoTable),
-        lcs(S1, m, S2, n - 1, memoTable, auxMemoTable)
+        lcs(S1, m - 1, S2, n, memoTable, auxMemoTable, tempState),
+        lcs(S1, m, S2, n - 1, memoTable, auxMemoTable, tempState)
       );
       memoTable[m][n] = finalResult;
-      auxMemoTable[m + 1][n + 1] = { value: finalResult };
-      setTable([...auxMemoTable]);
+      tempState.push({ m, n, finalResult, codeLine: 3 });
     }
 
     return finalResult;
+  };
+
+  const tableAnimationHelper = async (tempState, auxMemoTable) => {
+    for (let i = 0; i < tempState.length; i++) {
+      let { m, n, finalResult, codeLine } = tempState[i];
+      setCurrentCodeLine(1);
+      await sleep(150 * (speed / 50));
+
+      switch (codeLine) {
+        case 0:
+          setCurrentCodeLine(2);
+          await sleep(150 * (speed / 50));
+          setCurrentCodeLine(3);
+          break;
+        case 1:
+          setCurrentCodeLine(4);
+          await sleep(350 * (speed / 50));
+          setCurrentCodeLine(5);
+          break;
+        case 2:
+          setCurrentCodeLine(6);
+          auxMemoTable[0][n + 1].isBeingCompared = true;
+          auxMemoTable[m + 1][0].isBeingCompared = true;
+          setTable([...auxMemoTable]);
+          await sleep(150 * (speed / 50));
+          auxMemoTable[0][n + 1].isBeingCompared = false;
+          auxMemoTable[m + 1][0].isBeingCompared = false;
+          setTable([...auxMemoTable]);
+          await sleep(350 * (speed / 50));
+          setCurrentCodeLine(7);
+          break;
+        case 3:
+          setCurrentCodeLine(8);
+          await sleep(150 * (speed / 50));
+          setCurrentCodeLine(9);
+          auxMemoTable[m][n + 1].isBeingCompared = true;
+          auxMemoTable[m + 1][n].isBeingCompared = true;
+          setTable([...auxMemoTable]);
+          await sleep(350 * (speed / 50));
+          auxMemoTable[m][n + 1].isBeingCompared = false;
+          auxMemoTable[m + 1][n].isBeingCompared = false;
+          setTable([...auxMemoTable]);
+          break;
+        default:
+      }
+      await sleep(150 * (speed / 50));
+      auxMemoTable[m + 1][n + 1] = {
+        value: finalResult,
+        isCurrent: true,
+        arrowDir: 'noArrow',
+      };
+      setTable([...auxMemoTable]);
+      await sleep(150 * (speed / 50));
+      auxMemoTable[m + 1][n + 1].isCurrent = false;
+      setTable([...auxMemoTable]);
+      setCurrentCodeLine(0);
+    }
   };
 
   // Auxiliary function for memoTableOperations
@@ -117,9 +174,14 @@ const MemoTable = () => {
     let j = n;
 
     while (i > 0 && j > 0) {
+      setCurrentCodeLine(11);
+      await sleep(750 * (speed / 50));
+
       if (X[i - 1] === Y[j - 1]) {
         lcsString = X[i - 1] + lcsString;
-        await sleep(1000 * (speed / 50));
+        setCurrentCodeLine(22);
+        await sleep(750 * (speed / 50));
+        setCurrentCodeLine(33);
         setLongestCommonSubsequence(lcsString);
         i--;
         j--;
@@ -128,17 +190,22 @@ const MemoTable = () => {
         auxMemoTable[i + 2][j + 2].isTrack = true;
         setTable([...auxMemoTable]);
       } else if (memoTable[i - 1][j] > memoTable[i][j - 1]) {
-        await sleep(1000 * (speed / 50));
+        setCurrentCodeLine(44);
+        await sleep(750 * (speed / 50));
+        setCurrentCodeLine(55);
         i--;
         auxMemoTable[i + 2][j + 1].isTrack = true;
         setTable([...auxMemoTable]);
       } else {
-        await sleep(1000 * (speed / 50));
+        setCurrentCodeLine(66);
+        await sleep(750 * (speed / 50));
+        setCurrentCodeLine(77);
         j--;
         auxMemoTable[i + 1][j + 2].isTrack = true;
         setTable([...auxMemoTable]);
       }
     }
+    setCurrentCodeLine(11);
     return lcsString;
   };
 
@@ -162,9 +229,11 @@ const MemoTable = () => {
 
     let auxMemoTable = [];
     let memoTable = [];
+    let tempState = [];
 
     fillTable(X, Y, auxMemoTable, memoTable);
-    lcs(X, m, Y, n, memoTable, auxMemoTable);
+    lcs(X, m, Y, n, memoTable, auxMemoTable, tempState);
+    await tableAnimationHelper(tempState, auxMemoTable);
     await getLCS(X, Y, m, n, memoTable, auxMemoTable);
   };
 
@@ -260,7 +329,7 @@ const MemoTable = () => {
       >
         <Table table={table}></Table>
         <Box p="2" alignSelf="center">
-          {/* <DPCode currentCodeLine={currentCodeLine} /> */}
+          <MemoCode currentCodeLine={currentCodeLine} />
         </Box>
       </Flex>
     </>

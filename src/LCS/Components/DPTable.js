@@ -201,12 +201,12 @@ const DPTable = () => {
     let i = m,
       j = n;
     setCurrentCodeLine(11);
-    await sleep(1000 * (speed / 50));
+    await sleep(750 * (speed / 50));
     while (i > 0 && j > 0) {
       if (X[i - 1] === Y[j - 1]) {
         lcsStr[index - 1] = X[i - 1];
         setCurrentCodeLine(22);
-        await sleep(1000 * (speed / 50));
+        await sleep(750 * (speed / 50));
         setCurrentCodeLine(33);
 
         setLongestCommonSubsequence(lcsStr);
@@ -220,22 +220,22 @@ const DPTable = () => {
         setTable([...empyTable]);
       } else if (L[i - 1][j] > L[i][j - 1]) {
         setCurrentCodeLine(44);
-        await sleep(1000 * (speed / 50));
+        await sleep(750 * (speed / 50));
         setCurrentCodeLine(55);
         i--;
         empyTable[i + 2][j + 1].isTrack = true;
         setTable([...empyTable]);
       } else {
         setCurrentCodeLine(66);
-        await sleep(1000 * (speed / 50));
+        await sleep(750 * (speed / 50));
         setCurrentCodeLine(77);
         j--;
         empyTable[i + 1][j + 2].isTrack = true;
         setTable([...empyTable]);
       }
-      await sleep(1000 * (speed / 50));
+      await sleep(750 * (speed / 50));
       setCurrentCodeLine(11);
-      await sleep(1000 * (speed / 50));
+      await sleep(750 * (speed / 50));
     }
     setCurrentCodeLine(0);
 
