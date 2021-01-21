@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid, Box, Flex } from '@chakra-ui/react';
-import { v4 as uuidv4 } from 'uuid';
 import {
   BsArrowUp as ArrowUp,
   BsArrowLeft as ArrowLeft,
@@ -72,14 +71,14 @@ const Table = props => {
           templateRows={`repeat(${props.table.length - 1}, 1fr)`}
           gap={1}
         >
-          {props.table.map(row =>
-            row.map(cell => (
+          {props.table.map((row, i) =>
+            row.map((cell, j) => (
               <Box
                 h="12"
                 color="white"
                 bg={getBgColor(cell)}
                 textAlign="center"
-                key={uuidv4()}
+                key={`${i}${j}`}
               >
                 {getArrowIcon(cell.arrowDir)} {cell.value}
               </Box>

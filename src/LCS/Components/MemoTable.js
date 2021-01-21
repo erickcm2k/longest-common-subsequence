@@ -243,6 +243,12 @@ const MemoTable = () => {
     setIsLoading(false);
   };
 
+  const [memoTable, setMemoTable] = useState(null);
+  // Prevents Table child component from rerendering.
+  React.useEffect(() => {
+    setMemoTable(() => <Table table={table}></Table>);
+  }, [table]);
+
   return (
     <>
       <Container>
@@ -327,7 +333,7 @@ const MemoTable = () => {
         alignContent="center"
         flexDir={['column', 'column', 'column', 'row']}
       >
-        <Table table={table}></Table>
+        {memoTable}
         <Box p="2" alignSelf="center">
           <MemoCode currentCodeLine={currentCodeLine} />
         </Box>
