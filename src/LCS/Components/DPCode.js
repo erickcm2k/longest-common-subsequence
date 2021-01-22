@@ -94,7 +94,7 @@ const DPCode = ({ currentCodeLine }) => {
             <Tr>
               <Td>
                 <Text
-                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
+                  pl={['1rem', '1rem', '2rem', '2rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {'} '}
@@ -103,7 +103,10 @@ const DPCode = ({ currentCodeLine }) => {
             </Tr>
             <Tr>
               <Td>
-                <Text fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}>
+                <Text
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
+                  fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
+                >
                   {'}'}
                 </Text>
               </Td>
@@ -158,7 +161,7 @@ const DPCode = ({ currentCodeLine }) => {
             <Tr bg={currentCodeLine === 44 && 'brand.bondiBlue'}>
               <Td>
                 <Text
-                  pl={['1.5rem', '1.5rem', '3rem', '3rem']}
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {'} else if (dpTable[i - 1][j] > dpTable[i][j - 1]) {'}
@@ -179,7 +182,7 @@ const DPCode = ({ currentCodeLine }) => {
             <Tr bg={currentCodeLine === 66 && 'brand.bondiBlue'}>
               <Td>
                 <Text
-                  pl={['1.5rem', '1.5rem', '3rem', '3rem']}
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {'} else { '}
@@ -199,7 +202,7 @@ const DPCode = ({ currentCodeLine }) => {
             <Tr bg={currentCodeLine === 88 && 'brand.bondiBlue'}>
               <Td>
                 <Text
-                  pl={['1rem', '1rem', '2rem', '2rem']}
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {'} '}
@@ -208,10 +211,7 @@ const DPCode = ({ currentCodeLine }) => {
             </Tr>
             <Tr bg={currentCodeLine === 99 && 'brand.bondiBlue'}>
               <Td>
-                <Text
-                  pl={['1rem', '1rem', '2rem', '2rem']}
-                  fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
-                >
+                <Text fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}>
                   {'} '}
                 </Text>
               </Td>

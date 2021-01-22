@@ -63,7 +63,7 @@ const Table = props => {
       {/* Ensures that a table exists */}
       {props.table ? (
         <Grid
-          bg="brand.morningGlory"
+          bg="brand.botticelli"
           mt="5"
           mb="5"
           p="2"

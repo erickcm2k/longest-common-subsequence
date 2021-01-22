@@ -18,7 +18,7 @@ const MemoCode = ({ currentCodeLine }) => {
             <Tr bg={currentCodeLine === 1 && 'brand.bondiBlue'}>
               <Td>
                 <Text fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}>
-                  {'const lcs = (S1, m, S2, n, memoTable) => {'}
+                  {'const lcs = (X, m, Y, n, memo) => {'}
                 </Text>
               </Td>
             </Tr>
@@ -27,102 +27,107 @@ const MemoCode = ({ currentCodeLine }) => {
                 <Text
                   pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
-                >{`if (memoTable[m][n] > -1) {`}</Text>
+                >{`if (memo[m][n] > -1) {`}</Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 3 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 3 && 'brand.successGreen'}>
               <Td>
                 <Text
                   pl={['1rem', '1rem', '2rem', '2rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
-                  {'return memoTable[m][n];'}
+                  {'return memo[m][n];'}
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 4 && 'brand.successGreen'}>
+            <Tr bg={currentCodeLine === 4 && 'brand.bondiBlue'}>
               <Td>
                 <Text
-                  pl={['1.5rem', '1.5rem', '3rem', '3rem']}
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {'} else if (m === 0 || n === 0) {'}
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 5 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 5 && 'brand.successGreen'}>
               <Td>
                 <Text
                   pl={['1rem', '1rem', '2rem', '2rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
-                  {'memoTable[m][n] = 0;'}
+                  {'memo[m][n] = 0;'}
                 </Text>
               </Td>
             </Tr>
 
-            <Tr bg={currentCodeLine === 6 && 'brand.successGreen'}>
+            <Tr bg={currentCodeLine === 6 && 'brand.bondiBlue'}>
               <Td>
                 <Text
-                  pl={['1.5rem', '1.5rem', '3rem', '3rem']}
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
-                  {'} else if (S1[m - 1] === S2[n - 1]) {'}
+                  {'} else if (X[m - 1] === Y[n - 1]) {'}
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 7 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 7 && 'brand.successGreen'}>
               <Td>
                 <Text
                   pl={['1rem', '1rem', '2rem', '2rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {
-                    'memoTable[m][n] = 1 + lcs(S1, m - 1, S2, n - 1, memoTable);'
+                    'memo[m][n] = 1 + lcs(X, m - 1, Y, n - 1, memo);'
                   }
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 8 && 'brand.successGreen'}>
+            <Tr bg={currentCodeLine === 8 && 'brand.bondiBlue'}>
               <Td>
                 <Text
-                  pl={['1rem', '1rem', '2rem', '2rem']}
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {'} else {'}
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 9 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 9 && 'brand.successGreen'}>
               <Td>
                 <Text
                   pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {
-                    'memoTable[m][n] = Math.max(lcs(S1, m - 1, S2, n, memoTable),lcs(S1, m, S2, n - 1, memoTable));'
+                    'memo[m][n] = Math.max(lcs(X, m - 1, Y, n, memo),lcs(X, m, Y, n - 1, memo));'
                   }
                 </Text>
               </Td>
             </Tr>
             <Tr bg={currentCodeLine === 10 && 'brand.bondiBlue'}>
               <Td>
-                <Text fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}>
+                <Text
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
+                  fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
+                >
                   {'}'}
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 11 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 11 && 'brand.successGreen'}>
               <Td>
-                <Text fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}>
-                  {'return memoTable[m][n];'}
+                <Text
+                pl={['0.5rem', '0.5rem', '1rem', '1rem']}
+                fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}>
+                  {'return memo[m][n];'}
                 </Text>
               </Td>
             </Tr>
             <Tr bg={currentCodeLine === 12 && 'brand.bondiBlue'}>
               <Td>
                 <Text fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}>
-                  {'};'}
+                  {'}'}
                 </Text>
               </Td>
             </Tr>
@@ -141,14 +146,14 @@ const MemoCode = ({ currentCodeLine }) => {
         </Text>
         <Table size="xs" variant="simple" bg="brand.morningGlory" p="3">
           <Tbody>
-            <Tr bg={currentCodeLine === 11 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 13 && 'brand.bondiBlue'}>
               <Td>
                 <Text fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}>
                   {'while (i > 0 && j > 0) {'}
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 22 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 14 && 'brand.bondiBlue'}>
               <Td>
                 <Text
                   pl={['0.5rem', '0.5rem', '1rem', '1rem']}
@@ -156,7 +161,7 @@ const MemoCode = ({ currentCodeLine }) => {
                 >{`if (X[i - 1] === Y[j - 1]) {`}</Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 33 && 'brand.successGreen'}>
+            <Tr bg={currentCodeLine === 15 && 'brand.successGreen'}>
               <Td>
                 <Text
                   pl={['1rem', '1rem', '2rem', '2rem']}
@@ -166,17 +171,17 @@ const MemoCode = ({ currentCodeLine }) => {
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 44 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 16 && 'brand.bondiBlue'}>
               <Td>
                 <Text
-                  pl={['1.5rem', '1.5rem', '3rem', '3rem']}
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {'} else if (dpTable[i - 1][j] > dpTable[i][j - 1]) {'}
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 55 && 'brand.successGreen'}>
+            <Tr bg={currentCodeLine === 17 && 'brand.successGreen'}>
               <Td>
                 <Text
                   pl={['1rem', '1rem', '2rem', '2rem']}
@@ -187,17 +192,17 @@ const MemoCode = ({ currentCodeLine }) => {
               </Td>
             </Tr>
 
-            <Tr bg={currentCodeLine === 66 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 18 && 'brand.bondiBlue'}>
               <Td>
                 <Text
-                  pl={['1.5rem', '1.5rem', '3rem', '3rem']}
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {'} else { '}
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 77 && 'brand.successGreen'}>
+            <Tr bg={currentCodeLine === 19 && 'brand.successGreen'}>
               <Td>
                 <Text
                   pl={['1rem', '1rem', '2rem', '2rem']}
@@ -207,20 +212,19 @@ const MemoCode = ({ currentCodeLine }) => {
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 88 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 20 && 'brand.bondiBlue'}>
               <Td>
                 <Text
-                  pl={['1rem', '1rem', '2rem', '2rem']}
+                  pl={['0.5rem', '0.5rem', '1rem', '1rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {'} '}
                 </Text>
               </Td>
             </Tr>
-            <Tr bg={currentCodeLine === 99 && 'brand.bondiBlue'}>
+            <Tr bg={currentCodeLine === 21 && 'brand.bondiBlue'}>
               <Td>
                 <Text
-                  pl={['1rem', '1rem', '2rem', '2rem']}
                   fontSize={['0.8rem', '1rem', '0.8rem', '0.8rem']}
                 >
                   {'} '}

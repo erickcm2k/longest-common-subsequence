@@ -15,12 +15,13 @@ import {
 } from '@chakra-ui/react';
 import MemoTable from './MemoTable';
 import DPTable from './DPTable';
-
+import useSessionStorageState from '../../Hooks/useSessionStorage';
 const Dashboard = () => {
-  const [value, setValue] = useState('AGGTAB');
-  const [secondValue, setSecondValue] = useState('GXTXAYB');
+  const [value, setValue] = useSessionStorageState('s1', 'AGGTAB');
+  const [secondValue, setSecondValue] = useSessionStorageState('s2', 'GXTXAYB');
   const [isLoading, setIsLoading] = useState(false);
-  const [mode, setMode] = useState('top-down');
+  const [mode, setMode] = useSessionStorageState('mode', 'top-down');
+
   const [longestCommonSubsequence, setLongestCommonSubsequence] = useState('');
   const toggleMode = () => {
     setMode(mode === 'top-down' ? 'bottom-up' : 'top-down');
@@ -49,7 +50,7 @@ const Dashboard = () => {
             fontWeight="bold"
             textAlign="center"
           >
-            {mode === 'top-down' ? 'Top-Down' : 'Bottom-Up'}
+            Modo: {mode === 'top-down' ? 'Top-Down' : 'Bottom-Up'}
           </Text>
           <InputGroup minW="17rem" alignSelf="center">
             <InputLeftAddon
@@ -82,7 +83,7 @@ const Dashboard = () => {
             />
           </InputGroup>
 
-          <Text htmlFor="speedSlider"> Velocidad X{speed / 50}</Text>
+          <Text htmlFor="speedSlider"> Velocidad animación</Text>
           <Slider
             id="speedSlider"
             aria-label="slider-ex-1"

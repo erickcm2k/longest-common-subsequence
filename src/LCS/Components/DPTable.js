@@ -21,6 +21,7 @@ const DPTable = ({
   setIsLoading,
   speed,
   setLongestCommonSubsequence,
+  longestCommonSubsequence,
 }) => {
   const toast = useToast();
   const refreshPage = () => {
@@ -197,9 +198,21 @@ const DPTable = ({
         auxDPTable[i + 1][j + 2].isTrack = true;
         setTable([...auxDPTable]);
       }
+      await sleep(750 * (speed / 50));
     }
     setCurrentCodeLine(0);
+    toast({
+      title: 'Cálculo terminado',
+      description:
+        lcsString.length === 0
+          ? 'No existe un LCS para las cadenas ingresadas'
+          : '',
+      status: lcsString.length === 0 ? 'warning' : 'success',
+      duration: lcsString.length === 0 ? 4000 : 2000,
+      isClosable: false,
+    });
   };
+
   const dpTableOperations = async () => {
     setLongestCommonSubsequence('');
     if (S1.length === 0 || S2.length === 0) {

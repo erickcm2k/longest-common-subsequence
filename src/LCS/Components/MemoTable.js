@@ -137,7 +137,7 @@ const MemoTable = ({
           auxMemoTable[m][n + 1].isBeingCompared = true;
           auxMemoTable[m + 1][n].isBeingCompared = true;
           setTable([...auxMemoTable]);
-          await sleep(350 * (speed / 50));
+          await sleep(150 * (speed / 50));
           auxMemoTable[m][n + 1].isBeingCompared = false;
           auxMemoTable[m + 1][n].isBeingCompared = false;
           setTable([...auxMemoTable]);
@@ -151,7 +151,12 @@ const MemoTable = ({
         arrowDir: 'noArrow',
       };
       setTable([...auxMemoTable]);
-      await sleep(150 * (speed / 50));
+
+      if (codeLine !== 0) {
+        setCurrentCodeLine(11);
+        await sleep(150 * (speed / 50));
+      }
+
       auxMemoTable[m + 1][n + 1].isCurrent = false;
       setTable([...auxMemoTable]);
     }
@@ -165,14 +170,14 @@ const MemoTable = ({
     let j = n;
 
     while (i > 0 && j > 0) {
-      setCurrentCodeLine(11);
+      setCurrentCodeLine(13);
       await sleep(750 * (speed / 50));
 
       if (X[i - 1] === Y[j - 1]) {
         lcsString = X[i - 1] + lcsString;
-        setCurrentCodeLine(22);
+        setCurrentCodeLine(14);
         await sleep(750 * (speed / 50));
-        setCurrentCodeLine(33);
+        setCurrentCodeLine(15);
         setLongestCommonSubsequence(lcsString);
         i--;
         j--;
@@ -181,22 +186,33 @@ const MemoTable = ({
         auxMemoTable[i + 2][j + 2].isTrack = true;
         setTable([...auxMemoTable]);
       } else if (memoTable[i - 1][j] > memoTable[i][j - 1]) {
-        setCurrentCodeLine(44);
+        setCurrentCodeLine(16);
         await sleep(750 * (speed / 50));
-        setCurrentCodeLine(55);
+        setCurrentCodeLine(17);
         i--;
         auxMemoTable[i + 2][j + 1].isTrack = true;
         setTable([...auxMemoTable]);
       } else {
-        setCurrentCodeLine(66);
+        setCurrentCodeLine(18);
         await sleep(750 * (speed / 50));
-        setCurrentCodeLine(77);
+        setCurrentCodeLine(19);
         j--;
         auxMemoTable[i + 1][j + 2].isTrack = true;
         setTable([...auxMemoTable]);
       }
+      await sleep(750 * (speed / 50));
     }
     setCurrentCodeLine(0);
+    toast({
+      title: 'Cálculo terminado',
+      description:
+        lcsString.length === 0
+          ? 'No existe un LCS para las cadenas ingresadas'
+          : '',
+      status: lcsString.length === 0 ? 'warning' : 'success',
+      duration: lcsString.length === 0 ? 4000 : 2000,
+      isClosable: false,
+    });
   };
 
   const memoTableOperations = async () => {
@@ -211,7 +227,6 @@ const MemoTable = ({
       });
       return;
     }
-
     const X = S1;
     const Y = S2;
     const m = X.length;
