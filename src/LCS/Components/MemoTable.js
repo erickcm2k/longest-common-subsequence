@@ -2,43 +2,34 @@ import React, { useState } from 'react';
 import {
   Container,
   Button,
-  Input,
-  InputGroup,
-  InputLeftAddon,
   Stack,
   useToast,
-  Text,
   Box,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
   Flex,
 } from '@chakra-ui/react';
 
 import Table from './Table';
 import MemoCode from './MemoCode';
 import { sleep } from '../../Utils/sleep';
-// Method: Iterative Bottom-Up
-// Table fill: Top-Down
+// Method: Top-Down
+// Table fill: Bottom-Up
 
-const MemoTable = () => {
+const MemoTable = ({
+  S1,
+  S2,
+  isLoading,
+  setIsLoading,
+  speed,
+  setLongestCommonSubsequence,
+}) => {
   const toast = useToast();
-  const [value, setValue] = useState('AGGTAB');
-  const [secondValue, setSecondValue] = useState('GXTXAYB');
-  const [isLoading, setIsLoading] = useState(false);
-  const handleChange = event => setValue(event.target.value.toUpperCase());
 
-  const handleSecondChange = event =>
-    setSecondValue(event.target.value.toUpperCase());
   const refreshPage = () => {
     window.location.reload();
   };
   const [currentCodeLine, setCurrentCodeLine] = useState(0);
 
   const [table, setTable] = useState();
-  const [longestCommonSubsequence, setLongestCommonSubsequence] = useState('');
-  const [speed, setSpeed] = useState(50);
 
   // Auxiliary function for memoTableOperations
   const fillTable = (X, Y, auxMemoTable, memoTable) => {
@@ -163,8 +154,8 @@ const MemoTable = () => {
       await sleep(150 * (speed / 50));
       auxMemoTable[m + 1][n + 1].isCurrent = false;
       setTable([...auxMemoTable]);
-      setCurrentCodeLine(0);
     }
+    setCurrentCodeLine(0);
   };
 
   // Auxiliary function for memoTableOperations
@@ -205,13 +196,12 @@ const MemoTable = () => {
         setTable([...auxMemoTable]);
       }
     }
-    setCurrentCodeLine(11);
-    return lcsString;
+    setCurrentCodeLine(0);
   };
 
   const memoTableOperations = async () => {
     setLongestCommonSubsequence('');
-    if (value.length === 0 || secondValue.length === 0) {
+    if (S1.length === 0 || S2.length === 0) {
       toast({
         title: 'Hubo un error',
         description: 'Ambas cadenas deben tener al menos un caracter.',
@@ -222,8 +212,8 @@ const MemoTable = () => {
       return;
     }
 
-    const X = value;
-    const Y = secondValue;
+    const X = S1;
+    const Y = S2;
     const m = X.length;
     const n = Y.length;
 
@@ -252,52 +242,7 @@ const MemoTable = () => {
   return (
     <>
       <Container>
-        <Stack spacing={4}>
-          <InputGroup minW="17rem" alignSelf="center">
-            <InputLeftAddon
-              children="Cadena 1"
-              color="brand.stratos"
-              fontWeight="bold"
-            />
-            <Input
-              bg="white"
-              maxLength="10"
-              color="brand.stratos"
-              value={value}
-              onChange={handleChange}
-              disabled={isLoading}
-            />
-          </InputGroup>
-          <InputGroup minW="17rem" alignSelf="center">
-            <InputLeftAddon
-              children="Cadena 2"
-              color="brand.stratos"
-              fontWeight="bold"
-            />
-            <Input
-              bg="white"
-              maxLength="10"
-              color="brand.stratos"
-              value={secondValue}
-              onChange={handleSecondChange}
-              disabled={isLoading}
-            />
-          </InputGroup>
-
-          <Text htmlFor="speedSlider"> Velocidad X{speed / 50}</Text>
-          <Slider
-            id="speedSlider"
-            aria-label="slider-ex-1"
-            defaultValue={speed}
-            value={speed}
-            disabled={isLoading}
-            onChange={val => setSpeed(val)}
-          >
-            <SliderTrack bg="white">
-              <SliderFilledTrack bg="brand.bondiBlue" />
-            </SliderTrack>
-            <SliderThumb />
-          </Slider>
+        <Stack spacing={4} pt="4">
           <Button
             colorScheme="green"
             fontWeight="bold"
@@ -311,20 +256,6 @@ const MemoTable = () => {
             <Button colorScheme="red" fontWeight="bold" onClick={refreshPage}>
               Interrumpir
             </Button>
-          )}
-          {longestCommonSubsequence.length > 0 && (
-            <Box
-              bg="brand.morningGlory"
-              borderRadius="1rem"
-              p={['2', '3', '4', '5']}
-            >
-              <Text fontSize={['lg', 'lg', 'lg', 'xl']}>
-                La subsecuencia común más larga es:
-              </Text>
-              <Text fontSize={['lg', 'lg', 'lg', 'xl']} fontWeight="bold">
-                {longestCommonSubsequence}
-              </Text>
-            </Box>
           )}
         </Stack>
       </Container>
