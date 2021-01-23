@@ -35,7 +35,7 @@ const Dashboard = () => {
   return (
     <>
       <Container>
-        <Stack spacing={4}>
+        <Stack spacing={4} pt='2'>
           <Button
             bg="brand.morningGlory"
             color="brand.stratos"
