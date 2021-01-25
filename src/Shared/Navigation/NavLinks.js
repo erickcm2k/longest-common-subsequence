@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Link } from '@chakra-ui/react';
 import { QuestionIcon } from '@chakra-ui/icons';
+import userManual from '../../Assets/pdf/manual-lcs.pdf';
 const NavLinks = props => {
   return (
     <>
@@ -18,6 +19,7 @@ const NavLinks = props => {
         rightIcon={<QuestionIcon />}
         color={props.textColor || 'white'}
         variant="link"
+        onClick={() => window.open(userManual)}
       >
         Ayuda
       </Button>
