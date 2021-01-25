@@ -18,8 +18,8 @@ const Subsequence = () => {
               <Text pt='2'>Para nuestra cadena “ABC”, tenemos 2<sup>3</sup> = 8 subsecuencias</Text>
               <Text pt='2'>Entonces, si la longitud de la cadena es n, existen 2<sup>n</sup> subsecuencias de esa cadena.</Text>
               <Text pt='2'>Para nuestra cadena "ABC", la subsecuencia más larga es "ABC"</Text>
-              <Text pt='2'>Las subsecuencias comunes entre "HELLOM" y "HMLD" son "H" , "HL" , "HM", etc.</Text>
-              <Text pt='2'>Aquí "HLL" es la subsecuencia común más larga que tiene la longitud 3.</Text>
+              <Text pt='2'><strong>Ejemplo:</strong> Las subsecuencias comunes entre "HELLOM" y "HMLD" son "H" , "HL" , "HM", etc.</Text>
+              <Text pt='2'>Aquí "HLL" es la subsecuencia común más larga entre las cadenas "HELLOM" y HMLD.</Text>
           </Box>
       </Flex>
       </section>

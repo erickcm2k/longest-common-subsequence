@@ -1,12 +1,17 @@
 import React from 'react';
-import { Button } from '@chakra-ui/react';
+import { Button, Link } from '@chakra-ui/react';
 import { QuestionIcon } from '@chakra-ui/icons';
 const NavLinks = props => {
   return (
     <>
-      <Button py="3" mx="2" color={props.textColor || 'white'} variant="link">
-        Acerca de
-      </Button>
+      <Link
+        href="https://github.com/erickcm2k/longest-common-subsequence"
+        target="_blank"
+      >
+        <Button py="3" mx="2" color={props.textColor || 'white'} variant="link">
+          Acerca de
+        </Button>
+      </Link>
       <Button
         py="3"
         mx="2"
