@@ -97,12 +97,19 @@ const DPTable = ({
           await sleep(150 * (speed / 50));
           setCurrentCodeLine(6);
           // Animate comparison
-          auxDPTable[i][j + 1].isBeingCompared = true;
-          auxDPTable[i + 1][j].isBeingCompared = true;
+          // auxDPTable[i][j + 1].isBeingCompared = true;
+          // auxDPTable[i + 1][j].isBeingCompared = true;
+          // setTable([...auxDPTable]);
+          // await sleep(150 * (speed / 50));
+          // auxDPTable[i][j + 1].isBeingCompared = false;
+          // auxDPTable[i + 1][j].isBeingCompared = false;
+
+          auxDPTable[0][j + 1].isBeingCompared = true;
+          auxDPTable[i + 1][0].isBeingCompared = true;
           setTable([...auxDPTable]);
           await sleep(150 * (speed / 50));
-          auxDPTable[i][j + 1].isBeingCompared = false;
-          auxDPTable[i + 1][j].isBeingCompared = false;
+          auxDPTable[0][j + 1].isBeingCompared = false;
+          auxDPTable[i + 1][0].isBeingCompared = false;
 
           // Assing value and arrow direction
           L[i][j] = L[i - 1][j - 1] + 1;

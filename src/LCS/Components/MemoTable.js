@@ -115,7 +115,7 @@ const MemoTable = ({
           break;
         case 1:
           setCurrentCodeLine(4);
-          await sleep(350 * (speed / 50));
+          await sleep(150 * (speed / 50));
           setCurrentCodeLine(5);
           break;
         case 2:
@@ -126,8 +126,8 @@ const MemoTable = ({
           await sleep(150 * (speed / 50));
           auxMemoTable[0][n + 1].isBeingCompared = false;
           auxMemoTable[m + 1][0].isBeingCompared = false;
-          setTable([...auxMemoTable]);
-          await sleep(350 * (speed / 50));
+
+          await sleep(150 * (speed / 50));
           setCurrentCodeLine(7);
           break;
         case 3:
@@ -140,7 +140,7 @@ const MemoTable = ({
           await sleep(150 * (speed / 50));
           auxMemoTable[m][n + 1].isBeingCompared = false;
           auxMemoTable[m + 1][n].isBeingCompared = false;
-          setTable([...auxMemoTable]);
+
           break;
         default:
       }
