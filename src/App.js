@@ -7,7 +7,7 @@ import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import { ChakraProvider, Container } from '@chakra-ui/react';
 import customTheme from './customStyles';
 import MainNavigation from './Shared/Navigation/MainNavigation';
-import Footer from './Shared/Footer/Footer';
+// import Footer from './Shared/Footer/Footer';
 
 const App = () => {
   return (
@@ -28,7 +28,7 @@ const App = () => {
             </Switch>
           </Container>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </ChakraProvider>
   );
