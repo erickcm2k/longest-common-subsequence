@@ -18,12 +18,10 @@ const Footer = () => {
           fontSize={['1rem', '1.2rem', '1.5rem', '1.5rem']}
           color="white"
         >
-          Desarrollo
+          Diseño y desarrollo
         </Text>
         <List styleType="disc">
-          <ListItem color="white">Alamo Ramos Luis Alberto</ListItem>
-          <ListItem color="white">Camacho Soto Kevin</ListItem>
-          <ListItem color="white">Castañeda Martínez Erick</ListItem>
+          <ListItem color="white">Erick Castañeda Martínez</ListItem>
         </List>
       </Box>
     </Flex>
